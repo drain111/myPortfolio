@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Mi portfolio</title>
+    <script src="https://kit.fontawesome.com/e892c56b47.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+        background-image: url("../img/login-bg.png");
+        background-size:cover;
+        height:100dvh;
+        margin:0;
+        padding:0;
+        font-family: sans-serif;
+
+    }
+    #footer {
+        width:100%;
+        height:60px;
+        display:flex;
+        border: solid #434343;
+            border-top-width: 5px;
+            border-right-width: 0;
+            border-bottom-width: 0;
+            border-left-width: 0;
+        background: #202021;
+        color:white;
+        justify-content: space-between;
+
+    }
+    .mainContainer {
+        justify-content: end;
+        align-items: center;
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+    }
+    #weatherDiv {
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        padding:1rem;
+    }
+    .textDegrees {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    #windowsButton {
+        height:100%;
+        background:transparent;
+        border:none;
+    }
+    svg {
+        font-size: 22px;
+        color:white;
+        margin-right:1rem;
+    }
+    #rightSideUI {
+        display: flex;
+        padding: 0rem 1rem 0 0;
+        justify-content: center;
+        align-items: center;
+    }
+    #wifiAndBattery {
+        display: flex;
+        margin-right:3rem;
+    }
+    #dateAndHour {
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: end;
+    }
+    #hour {
+        margin-top:5px;
+        margin-bottom:0px;
+    }
+    #date {
+        margin-top:5px;
+        margin-bottom:5px;
+    }
+    .fa-windows {
+          font-size: 28px;
+    }
+    .icon > img {
+        width:32px;
+    }
+    #apps {
+        display:flex;
+        width:100vw;
+        height:100%;
+        column-width: 160px;
+        flex-direction:column;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        user-select: none;
+
+
+    }
+    #apps > div {
+        break-inside: avoid;
+    }
+    .icon {
+        padding:1rem;
+        display:flex;
+        justify-content:center;
+        flex-direction:column;
+        align-items: center;
+        width:64px;
+        height:64px;
+        text-align: center;
+        font-size: 14px;
+        justify-content: left;
+        box-sizing: content-box;
+    }
+    
+    .folders {
+        touch-action: none;
+        color:white;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        
+        /* 1. Semi-transparent background color (Adjust the last value 0.4 for opacity) */
+        background: rgba(20, 24, 33, 0.45);
+        
+        /* 2. Frosted glass effect (blurs whatever wallpaper/desktop is behind it) */
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%); /* Safari support */
+        
+        /* 3. Subtle translucent border to define the edges */
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        
+        /* 4. Soft shadow to lift it off the background */
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        
+        overflow: hidden;
+        margin-left:1rem;
+        margin-right:1rem;
+        max-width: 480px;
+        max-height: 288px;
+        /* Firefox Scrollbar Styling */
+        scrollbar-width: auto;
+        scrollbar-color: rgb(246, 246, 246) #00000036;
+    }
+    .iconBackground {
+        display: flex;
+        flex-wrap: wrap;
+        overflow: auto;
+    }
+    .iconTab {
+        touch-action: none;
+        /* 1. Semi-transparent background color (Adjust the last value 0.4 for opacity) */
+        background: rgba(0, 0, 0, 0.564);
+        padding:0.25rem;
+        text-align:center;
+    }
+    /*thicker scrollbars*/
+    .folders::-webkit-scrollbar {
+        width: 1rem;
+        border-radius: 3rem;
+    }
+
+    .folders::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(242, 239, 239, 0.861); 
+        border-radius: 3rem;
+        background: rgba(0, 0, 0, 0.35); 
+    }
+
+    .folders::-webkit-scrollbar-thumb {
+        border-radius: 3rem;
+        -webkit-box-shadow: inset 0 0 6px rgb(244, 236, 236); 
+        background: #00000036;
+        
+        /* Creates a 2px padding gap between the thumb and the dark track */
+        border: 2px solid transparent; 
+        background-clip: padding-box;
+    }
+        /* Thumb Hover & Active States */
+        .folders::-webkit-scrollbar-thumb:hover {
+            background: #00000036;
+            background-clip: padding-box;
+        }
+
+        .folders::-webkit-scrollbar-thumb:active {
+            background: #00000036;
+            background-clip: padding-box;
+        }
+    .d-none {
+        display: none!important;
+    }
+    #modalWindow {
+        color:white;
+        position: fixed;
+        inset: 0;              /* top/right/bottom/left: 0 */
+        z-index: 10;
+        margin: 1rem;              /* remove the old margin: 1rem */
+        display: flex;          /* keep — just remove it from #apps's flex flow */
+        flex-direction: column;
+        color: white;
+        justify-content: left;
+        overflow-y: auto;       /* safety net: scroll internally if content is ever taller than the screen */
+    }
+
+    #titleModal {
+        display: flex;
+        background: #202020;
+        border-radius: 1rem 1rem 0 0;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden; /* safety net, nothing should escape this box */
+        min-height: 35px;;
+    }
+
+    .exampleTitle {
+        margin: 0;
+        margin-top: 0.5rem;
+        margin-left: 0.5rem;
+        background: #2c2c2c;
+        min-width: 0;      /* <-- the actual fix: lets the flex item shrink past its content size */
+        overflow: hidden;  /* clip instead of push */
+        border-radius: 1rem 1rem 0 0;
+        padding: 0.3rem 0.3rem 0.3rem 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .exampleTitle h4 {
+        overflow: hidden;
+        text-overflow: ellipsis; /* "Banco de Es…" instead of spilling out */
+        white-space: nowrap;
+    }
+    .fa-xmark:hover {
+        background:#c42b1c;
+    }
+    .fa-xmark {
+        flex-shrink: 0; /* make sure the close button never gets squeezed or pushed out */
+        padding: 0.5rem;
+    }
+    
+    .small {
+        width: 24px;
+        height: 24px;;
+        margin-right:1rem;
+    }
+    h4 {
+        margin:0;
+    }
+    #contentModal {
+        background: #191919;
+        display: flex;
+        width: 100%;
+        padding: 1rem;
+        gap: 1rem;
+        border-radius:0 0 1rem 1rem;
+    }
+
+    .carousel {
+        padding: 0;
+        flex: 1 1 50%;
+        max-width: 50%;
+        display: flex;
+        justify-content: center;
+          align-items: center;
+    }
+    
+    .carousel-inner {
+        width: 100%;
+    }
+    .carousel-inner .item img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 0.5rem;
+
+    }
+    .infoPanel {
+        flex: 1 1 40%;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .downloadBtn {
+        margin-top: 1rem;
+        align-self: flex-start;
+        color: white;
+        background: #2c2c2c;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+    }
+    .carousel-inner > .active {
+        width:100%;
+        justify-content: center;
+        align-content: center;
+        display:flex;
+    }
+    iframe {
+        width:100%;
+        height:100%;
+    }
+    /* Phones: stack vertically, both full width */
+    @media (max-width: 600px) {
+        .carousel, .infoPanel {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+        
+    }
+    a:hover {
+        color: #56a7ef;
+        text-decoration: underline;
+    }
+    @media(max-width:1000px) {
+        #contentModal {
+            flex-direction: column;
+            overflow: auto;
+            align-items: center;
+        }
+        .carousel-inner {
+            height:auto!important;
+        }
+        #textModal {
+            max-width: 100%!important;
+        }
+        .folders {
+            max-width: 280px;
+            max-height:192px;
+        }
+    }
+    
+    .carousel-inner {
+        align-items: normal;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    #textModal {
+          max-width: 50%;
+        padding: 2rem 2.5rem;
+          background-color: #2c2c2c;
+          border-radius:1rem;
+        line-height: 1.7;
+
+    }
+    
+    #textModal h5 {
+        font-weight: 400;
+        margin: 0 0 1.5rem 0;
+    }
+    #textModal a {
+        display: block;
+        margin-top: 0.4rem;
+        word-break: break-all; /* keeps that long VRUpload URL from overflowing the panel */
+    }
+    .linkButton {
+        background: #535353;
+        width: fit-content;
+        padding: 1rem;
+        border-radius: 2rem;
+        color: #fff;
+        margin-bottom: 1rem;
+    }
+    .topModalTitleText {
+        padding-right: 2rem;
+
+    }
+    .carousel-caption {
+        background: #000000ab;
+        border-radius: 1rem;
+    }
+    .exampleTitle > h4 {
+          margin-right: 1rem;
+    }
+    #windowsButtonWrapper {
+        position: relative;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    #startMenu {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 200px;
+        color: white;
+        background: rgba(20, 24, 33, 0.75);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        padding: 0.4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        z-index: 15;
+        user-select: none;
+    }
+    .startMenuItem {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .startMenuItem:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    .startMenuItem i {
+        margin-right: 0;
+        width: 18px;
+        text-align: center;
+    }
+    .startMenuItem .fa-chevron-right {
+        margin-left: auto;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+    #gamesSubMenu {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        padding-left: 0.5rem;
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        margin-left: 0.5rem;
+    }
+    .gameIframeItem {
+        height: 65vh !important;
+        width: 100%;
+    }
+    .gameIframeItem iframe {
+        border: none;
+        border-radius: 0.5rem;
+    }
+</style>
+<body>
+    <div class="mainContainer">
+        <div id="apps">
+            
+            <div id="tabProfessional" class="folders"  >
+                <div class="iconTab" onpointerdown="mousedown(event)"> Proyectos profesionales</div>
+                <div class="iconBackground">
+                    <div  class="icon" onclick="OpenModal(event, 'CD')"><img  src="../img/penguin.png"><p>Clon Digital</p></div>                   
+                    <div  class="icon" onclick="OpenModal(event, 'BCE')"><img src="../img/penguin.png"><p>Banco de España</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'AirT')"><img src="../img/penguin.png"><p>AirT</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Margon')"><img src="../img/penguin.png"><p>Margon</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'PRL')"><img src="../img/penguin.png"><p>PRL</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'ULL')"><img src="../img/penguin.png"><p>UlldeBou</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Hospital')"><img src="../img/penguin.png"><p>Medicina</p></div> 
+                    <div  class="icon" onclick="OpenModal(event, 'Bomberos')"><img src="../img/penguin.png"><p>Bomberos</p></div>  
+                </div> 
+            </div>
+            <div id="tabUniversity" class="folders"  >
+                <div class="iconTab" onpointerdown="mousedown(event)">Proyectos Universitarios</div>
+                <div class="iconBackground"> 
+                    <div  class="icon" onclick="OpenModal(event, 'TFG')"><img src="../img/penguin.png"><p>TFG</p></div>                   
+                    <div  class="icon" onclick="OpenModal(event, 'TFM')"><img src="../img/penguin.png"><p>TFM</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Vuf')"><img src="../img/penguin.png"><p>Vuforia</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Jhon')"><img src="../img/penguin.png"><p>Jhon</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Pokedex')"><img src="../img/penguin.png"><p>Pokedex</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Unreal')"><img src="../img/penguin.png"><p>Unreal</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'WebGL')"><img src="../img/penguin.png"><p>WebGl</p></div>  
+                    <div  class="icon" onclick="OpenModal(event, 'Android')"><img src="../img/penguin.png"><p>Android</p></div> 
+                </div>
+            
+            </div>
+            <div id="tabGameJam" class="folders" >
+                <div class="iconTab" onpointerdown="mousedown(event)"> Game Jam</div>
+                <div class="iconBackground">
+                    <div  class="icon" onclick="OpenModal(event, 'GJ')"><img src="../img/penguin.png"><p>Penguin</p>
+                    </div>
+                </div> 
+            </div>
+            <div id="modalWindow" class="d-none">
+                <div id="titleModal"> 
+                    <div class="exampleTitle" id="CD"><img class="small" src="../img/penguin.png"><h4 id="topModalTitleText">Title</h4></div>
+                    <i onclick="CloseModal()" class="fa-solid fa-xmark"></i>
+                </div>
+                <div id="contentModal">
+                    <div id="myCarousel" class="carousel slide" data-interval="false">
+                        <!-- Indicators -->
+                        <ol id="circles" class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div id="innerCarousel" class="carousel-inner">
+                            <div class="item active">
+                                <img src="../img/clon1.png" alt="Clon Digital, página de usuario">
+                            </div>
+
+                            <div class="item">
+                                <img src="../img/clon2.png" alt="Antes de entrar en una sala">
+                            </div>
+
+                            <div class="item">
+                                <img src="../img/clon3.png" alt="Una sala de ejemplo">
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- Left and right controls -->
+                        <a id="next-carousel" class="left carousel-control" href="#myCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a id="prev-carousel" class="right carousel-control" href="#myCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    <div id="textModal"> 
+                        <h5>Clon Digital es un Saas desarrollado durante mi trabajo en dypsela. En la plataforma podias subir modelos 3d que se optimizaban para tener menos de 100k triangulos y texturas de menos de 1k para poder ser vistos en dispositivos de gama baja y realidad virtual. En esta plataforma desarrollé el backend en nodejs en una instancia de AWS. La base de datos donde guardabamos la información era de postgres en una instancia RDS de amazon. Los modelos 3d se podian usar para crear salas donde automaticamente se les asignaba un colisionador y una experiencia multijugador, done podias moverte y hablar con otras personas. También podías añadir pdfs, videos otros modelos, luces para cambiar la visibilidad y los administradores de la sala tenian el control para prohibir el acceso a otros usuarios o permitirles hablar. Los modelos también se podían ver en Realidad aumentada. Debajo de este parrafo se encuentra el link a clondigital y a una de las salas para probar la experiencia.</h5>
+                        <a target="_blank" href="www.clondigital.com">clondigital.com</a>
+                        <a target="_blank" href="https://www.clondigital.com/VRUpload/di861rgvm7opp1fr.html?code=di861rgvm7opsnnz">https://www.clondigital.com/VRUpload/di861rgvm7opp1fr.html?code=di861rgvm7opsnnz</a>
+
+                    </div>
+                </div>
+                
+            </div>
+            
+
+        </div>
+        <div id="footer">
+            <div id="weatherDiv">
+                <div id="weatherIcon" ><i class="fa-solid fa-sun"></i></div>
+                
+                <p id="degrees" class="textDegrees">20ºC</p>
+            </div>
+            <div id="windowsButtonWrapper">
+                <button id="windowsButton" onclick="ToggleStartMenu(event)"><i class="fa-brands fa-windows"></i></button>
+                <div id="startMenu" class="d-none">
+                    <div class="startMenuItem" onclick="CloseStartMenu(); OpenModal(event, 'ME')">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Sobre mí</span>
+                    </div>
+                    <div class="startMenuItem" onclick="ToggleGamesMenu(event)">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>Juegos</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                    <div id="gamesSubMenu" class="d-none">
+                        <div class="startMenuItem" onclick="CloseStartMenu(); OpenModal(event, 'Buscaminas')">
+                            <i class="fa-solid fa-bomb"></i>
+                            <span>Buscaminas</span>
+                        </div>
+                        <div class="startMenuItem" onclick="CloseStartMenu(); OpenModal(event, 'Solitario')">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Solitario</span>
+                        </div>
+                        <div class="startMenuItem" onclick="CloseStartMenu(); OpenModal(event, 'SpaceCadet')">
+                            <i class="fa-solid fa-shuttle-space"></i>
+                            <span>Space Cadet</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="rightSideUI">
+                <div id="wifiAndBattery">
+                    <i class="fa-solid fa-wifi"></i>
+                    <div id="battery"><i class="fa-solid fa-battery-full"></i> </div>  
+                    
+                </div>
+                <div id="dateAndHour">
+                    <p id="hour">19:45</p>
+                    <p id="date">21/12/1973</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    //In order not to ad a bunch of titles, carrousels and texts, we create a dictionary and substitute the contents of the carrousel, titles and text with this
+    const projects ={ "CD" : {
+        title: "Clon Digital",
+        description: [
+            "Clon Digital es un SaaS que desarrollé durante mi etapa en Dypsela. La plataforma permitía subir modelos 3D que se optimizaban automáticamente por debajo de 100k triángulos y texturas de 1K, para que pudieran visualizarse en dispositivos de gama baja y en realidad virtual. La plataforma funcionaba tanto en móvil (Android e iOS), VR y PCs",
+            "Desarrollé el backend en Node.js sobre una instancia de AWS, con PostgreSQL en una instancia RDS como base de datos. Los modelos 3D podían usarse para crear salas multijugador: cada modelo recibía automáticamente un colisionador, y los usuarios podían moverse por la sala y hablar entre ellos. También era posible añadir PDFs, vídeos y otros modelos, controlar la iluminación y la visibilidad, y los administradores de la sala podían restringir el acceso o los permisos de voz de otros usuarios. El multijugador corría sobre otra instancia de AWS también en node.js que usaba websockets para comunicaciones en tiempo real.", // second paragraph, if you ever split it
+            "Los modelos 3D también podían visualizarse en realidad aumentada. En la experiencia de ejemplo de abajo, abriendo el menú izquierdo se pueden ver los modelos y al hacer clic en el icono de QR, se abrirá un QR que al escanear te permitirá visualizar en el móvil la realidad aumentada.",
+            "Enlaces: el primer enlace es a la página principal de la plataforma y el segundo sala de ejemplo para probar la experiencia."
+        ],
+        photos: [
+            {label:"Clon Digital, página de usuario",first:true, type:"img", url:"../img/clon1.png"},
+            {label:"Antes de entrar en una sala",type:"img", url:"../img/clon2.png"},
+            {label:"Una sala de ejemplo",type:"img", url:"../img/clon3.png"},
+        ],
+        links: [
+            { label: "clondigital.com", url: "https://www.clondigital.com" },
+            { label: "Ver sala de ejemplo", url: "https://www.clondigital.com/VRUpload/di861rgvm7opp1fr.html?code=di861rgvm7opsnnz" }
+        ]
+    },
+    "AirT" : {
+        title:"AirT",
+        description: [
+            "Este proyecto fue creado en 3 meses bajo una beca europea en la Universidad pública de Valencia. Consistía en un software para dar órdenes a un dron automático. ",
+            "En la app, el usuario podía calibrar el dron, escanear una habitación y subir su nube de puntos a Unity o usar un archivo collada, programar un camino para que el dron lo siga automáticamente y finalmente ver el dron volar por el camino dibujado."
+        ],
+        photos: [
+            {label:"Video de como funcionaba AirT",first:true,type:"video", url: "https://www.dropbox.com/scl/fi/5q78gz23979zy9yv2uadl/recordingAirtApp.mp4?rlkey=ajcac82i79wt7cpzdvh7uf8ja&st=yezgy2mu&raw=1"}
+        ],
+        links: [
+            {label:"Web del proyecto", url:"https://airt.webs.upv.es/"}
+        ]
+    },
+    "BCE" : {
+        title:"Banco de España",
+        description: [
+            "Este proyecto se desarrolló en 1 mes para el Banco de España.",
+            "Es un visor web donde el usuario puede realizar una visita guiada tanto en VR como en 2D del edificio del Banco de España. En la esquina superior izquierda hay un mapa donde el usuario se puede mover entre todas las vistas del banco, y en algunas habitaciones hay puntos de interés que el usuario puede abrir para ver objetos en 3D del banco hechos con IA con un QR para verlo en Realidad Aumentada.",
+            "Este proyecto se realizó usando React.js."
+        ],
+        photos: [
+            {label:"La pantalla del principio donde aparecen las instrucciones",first:true, type:"img", url:"../img/bce1.png"},
+            {label:"Una de las vistas que contiene un objeto 3d",type:"img", url:"../img/bce2.png"},
+            {label:"Otra vista de ejemplo",type:"img", url:"../img/bce3.png"},
+        ],
+        links: [
+            {label:"Web del proyecto", url:"https://www.clondigital.com/internal/bce"}
+        ]
+    },
+    "Margon" : {
+        title:"La doctora Margon y el Viaje del agua",
+        description: [
+            "En este proyecto de dypsela trabajé para arreglar la desincronización de audio en dispositivos de baja potencia, optimizaciones y hacer la app multilenguaje, en vez de tener varias apps para cada idioma.",
+            "La Doctora Margon y el Viaje del agua era una app que usaba Unity y Vuforia donde los niños, usando la realidad aumentada con el móvil/tablet y un libro de compañía podían ver escenas donde se les explicaba el viaje del agua.",
+            "El código secreto para acceder es GLOBAL."
+        ],
+        photos: [
+            {label:"El menu inicial de la app",first:true, type:"img", url:"../img/margon1.jpg"},
+            {label:"Una vez escaneada la página, pulsa en el botón verde de play",type:"img", url:"../img/margon2.jpg"},
+            {label:"Ejemplo de escena",type:"img", url:"../img/margon3.jpg"},
+        ],
+        links: [
+            {label:"Link a la app", url:"https://www.dropbox.com/scl/fi/e2vf3rlhc8hrou16tyu0k/Doctora-Margon.apk?rlkey=o6hxd4tre1qnwmtjrgvj8rwma&st=3815ftj6&dl=0"},
+            {label:"Link al libro", url:"https://www.doctoramargon.com/wp-content/uploads/2019/02/La-Doctora-Margon-y-el-Gran-Viaje-del-agua.pdf"},
+
+        ]
+    },
+    "PRL" : {
+        title:"PRL",
+        description: [
+            "En este proyecto de dypsela trabajé programando una app de realidad virtual para teléfonos de Android usando Unity.",
+            "En la app, cuyo objetivo era entrenar a los trabajadores de Global Omnium para Prevención de Riesgos Laborales, primero se creaba un perfil del trabajador. Tras crear el perfil, el trabajador se ponía las gafas de cardboard y comenzaba la experiencia de RV, donde un supervisor enviaba tareas a través de un chat.",
+            "Al elegir una tarea, en 1 de los 2 mapas creados para la experiencia, el trabajador se podía mover y reparar tuberías, limpiar amianto o realizar otras tareas de riesgos laborales. Al acabar la tarea se juzgaba en una pantalla final si el trabajador había seguido los pasos correctos, como asegurarse de que no había acumulación de gas en un sótano o si se había limpiado correctamente el amianto." ,
+        ],
+        photos: [
+            {label:"Primera escena, donde había que cortar una tubería de amianto, detrás del camión de limpieza de amianto",first:true, type:"img", url:"https://static.tumblr.com/upjk3mf/6VGqkym9c/foto2.png"},
+            {label:"Segundo escenario, interior, donde había que cambiar una bomba de limpieza de tuberías.",type:"img", url:"https://static.tumblr.com/upjk3mf/V5Fqkym8q/foto6.png"},
+            {label:"Segundo escenario, exterior",type:"img", url:"https://static.tumblr.com/upjk3mf/ol6qkym89/foto5.png"},
+        ],
+        links: [
+            
+        ]
+    },
+    "ULL" : {
+        title:"Ull de Bou",
+        description: [
+            "Reusando el movimiento de la app de PRL se realizó una visita guiada con un modelado en 3D de la planta de tratamiento de agua de ULL de Bou.",
+            "La aplicación fue desarrollada en Unity. Con los mandos de las quest creabas una flecha y elegías dónde teletransportarte."
+        ],
+        photos: [
+            {label:"Foto de la visita",first:true, type:"img", url:"https://static.tumblr.com/upjk3mf/DUYqkynog/ulldebou.jpg"},
+            {label:"Foto de la visita interior", type:"img", url:"https://static.tumblr.com/upjk3mf/jsJtjt7r3/ulldebou2.png"},
+
+            {label:"Video de como funcionaba la app",type:"video", url: "https://drive.google.com/file/d/1cYs4KIx8E99EL4nOv9aWKI4gFVYAcPw2/preview"}
+
+            
+        ],
+        links: [
+            
+        ]
+    },
+    "Hospital": {
+        title:"Medicina",
+        description: [
+            "Una app hecha en godot para un hospital donde un modelo 3d sacado de Unreal Metahuman, que está atado a los mandos de las quest, se sobrepone sobre un dispositivo de entrenamiento para médicos que sirve para practicar la inserción de sondas por la boca."
+        ],
+        photos:[
+            {label:"Video de la app", type:"video", first:true, url:"https://drive.google.com/file/d/1RiG57CjL_ainLzEWZkqM_UCnatcRvAk4/preview"}
+        ],
+        links: [
+
+        ]
+    },
+    "Bomberos": {
+        title:"Bomberos",
+        description: [
+            "Esta fue una demo realizada en un par de días para un departamento de bomberos.", 
+            "Realizado en Unity, creamos una app para android en la que se veia el mapa de una zona que necesitaría efectivos y, debido a que la app tenía un componente online donde varios se conectaban, el host de la sesión podía emplazar efectivos en el terreno mientras el resto de usuarios visualizaban donde los ponían.", 
+            "La app era de Realidad Aumentada para poder observar el terreno como si fuera una maqueta."
+        ],
+        photos:[
+            {label:"Imagen de la app", type:"img", first:true, url:"https://static.tumblr.com/upjk3mf/DVoqkyyx8/screenshot_2020-12-07-13-29-07-736_com.dypsela.incendio.jpg"}
+        ],
+        links: [
+
+        ]
+    },
+    "TFG" : {
+        title: "TFG",
+        description: [
+            "Mi trabajo de final de grado fue un videojuego realizado en Unity que usaba machine learning llamado Rufidio's Adventure.",
+            "El videojuego es un idle game, que viene a ser juegos donde el usuario gestiona recursos incrementales y se juegan mayormente solos.",
+            "El juego usa aprendizaje automático a través de redes neuronales para controlar al personaje principal y consistía en 2 fases. La primera, donde el usuario ordenaba al protagonista en su casa aprender una habilidad usando dinero y la segunda, donde en un nivel de saltos, el protagonista intentaba completar el nivel automáticamente y conseguir dinero para aprender habilidades.",
+            "Debido a la cantidad de tiempo que hace de este proyecto, la versión de Unity es muy vieja y no era compatible con algunos procesos usados, que tuve que desarrollar desde 0.",
+            "El primer video enseña la parte del idle game, donde el jugador enseña al protagonista a saltar. En el segundo se puede ver al protagonista aprendiendo el mapa, volviendo a la casa para descansar ya que lo necesita y actualizando con monedas los métodos de descanso. En el tercero se pueden ver los efectos de mejorar los items. Y en el último como aprende a atacar para poder completar el juego."
+        ],
+        photos: [
+            {label:"la parte del idle game, donde el jugador enseña al protagonista a saltar.",first:true, type:"video", url:"https://drive.google.com/file/d/0B6rsjhW1bXvvTWJQbHJLSnJJTUE/preview?resourcekey=0-FSlhOW71dvxUVaYefh4zjA"},
+            {label:"Aqui se puede ver al protagonista aprendiendo el mapa, volviendo a la casa para descansar ya que lo necesita y actualizando con monedas los métodos de descanso.",type:"video", url:"https://drive.google.com/file/d/0B6rsjhW1bXvvQVFOZlJnQkZiek0/preview?resourcekey=0--DPQTI5semOwZ-EoRUYBkg"},
+            {label:"3º video",type:"video", url:"https://drive.google.com/file/d/0B6rsjhW1bXvvSkZTMU4zS0RrZGc/preview?resourcekey=0-pLr46HVm265FJhxKHkCjqA"},
+            {label:"4º video",type:"video", url:"https://drive.google.com/file/d/0B6rsjhW1bXvvS01Cb3hyRUVRckE/preview?resourcekey=0-NlFz6pRXGoWzPnXVlit4tA"} 
+        ],
+        links: [
+            { label: "Enlace de descarga al juego", url: "https://drive.google.com/file/d/0B6rsjhW1bXvvS3NHczExdWVmUE0/view?usp=sharing&resourcekey=0-EPB2em1doBkyDKGF4DkPnA" },
+        ]
+    },
+    "TFM" : {
+        title: "TFM",
+        description: [
+            "Este fue mi proyecto de final de master. Consistía en implementar RTDesk(Real Time Discrete Simulation Kernel es una librería desarrollada en C++ diseñada para la gestión temporal de eventos discretos en tiempo real. ) en Unity reemplazando los métodos de Unity de C# por métodos manejados por el motor de la UPV RTDesk.",
+            "Conseguí sustituir los métodos FixedUpdate, LateUpdate and Update de Unity por los mios con una mejora de un 17% de fps y un aumento de 1000 enemigos en el mapa.",
+            "Hay algunos fallos debido a que el motor de Unity que usaba no tenía expuestos sus métodos como para modificarlos, por lo que se tuvo que hacer acciones complejas para modificarlo. "
+        ],
+        photos: [
+            {label:"Foto del juego de ejemplo diseñado para probar el motor.",first:true, type:"img", url:"https://static.tumblr.com/upjk3mf/uKbql4m2r/rtdesk_game.png"}
+        ],
+        links: [
+            { label: "Documento de tfm donde se explica mejor.", url: "https://riunet.upv.es/entities/publication/81d6b515-7f89-4a7b-a145-7007427b02a9" },
+        ]
+    },
+    "Vuf" : {
+        title: "Juego de Vuforia",
+        description: [
+            "Este juego desarrollado para una asignatura de realidad aumentada usa Unity y Vuforia.",
+            "El juego consiste en derribar aviones que salen de un marcador de vuforia en Realidad Aumentada."
+        ],
+        photos: [
+            {label:"Video",first:true, type:"video", url:"https://drive.google.com/file/d/1Ty-2GTCgjkZJRwzEpY7glePIiuvQStWY/preview"}
+        ],
+        links: [
+        ]
+    },
+    "Jhon" : {
+        title: "Jhon's Magical Adventures",
+        description: [
+            "Este juego desarrollado junto a un compañero fue el primer videojuego que hicimos en la carrera. ",
+            "Desarrollado en Starling (motor de código abierto de JavaScript) el juego consiste en un videojuego de aventuras donde controlas a un mago que debe llegar al final de un mapa y a parte un editor donde puedes crear tu propio mapa."
+        ],
+        photos: [
+            {label:"Video",first:true, type:"video", url:"https://www.dropbox.com/scl/fi/3rsr97hd5tl4ohyg42k67/jhon.webm?rlkey=b3icmb3iw78p8a2lxrbp1oxpd&st=roeun2ie&raw=1"}
+        ],
+        links: [
+        ]
+    },
+    "Pokedex" : {
+        title: "Pokedex",
+        description: [
+            "Esta aplicación fue el proyecto final para la asignatura de aplicaciones de android.",
+            "Desarrollado en Java para Android era una app simple que llamaba a pokeapi.co para obtener la información de cada pokemon."
+        ],
+        photos: [
+            {label:"Foto de un pokemon",first:true, type:"img", url:"https://static.tumblr.com/upjk3mf/fuqohskkt/screenshot_20161207-023732.png"},
+            {label:"Foto de la lista de todos los pokemon", type:"img", url:"https://static.tumblr.com/upjk3mf/o3Aohskkw/screenshot_20161207-023750.png"} 
+        ],
+        links: [
+        ]
+    },
+    "Unreal" : {
+        title: "Juego de Unreal",
+        description: [
+            "Este juego desarrollado junto a otro compañero, fue el proyecto final de la asignatura de IA.",
+            "Desarrollado en Unreal y C++, es un juego donde compites con 3 IA para llegar a la cima. Principalmente desarrollado para aprender sobre pathfinding usando navmesh y sobre la dirección de nodos usando A*."
+        ],
+        photos: [
+            {label:"video",first:true, type:"video", url:"https://www.dropbox.com/scl/fi/anym2tdcbxm3yoxb8u452/VulcanEscape.mp4?rlkey=w0hyloqlveolqxo7c48j8gpos&st=re6rn5f6&raw=1"},
+        ],
+        links: [
+        ]
+    },
+    "WebGL" : {
+        title: "WebGL",
+        description: [
+            "Esta Web fue desarrollada por mí para una asignatura de desarrollo de gráficos en 3D.",
+            "Desarrollado en JavaScript y en WebGL puro sin ningún motor, es el ejemplo que se puede ver previamente."
+        ],
+        photos: [
+            {label:"Imagen del modelo",first:true, type:"img", url:"https://static.tumblr.com/upjk3mf/nnQtjtk5v/majora_s.png"},
+        ],
+        links: [
+            { label: "Enlace a la web", url: "https://adricarb.tumblr.com/webgl" },
+
+        ]
+    },
+    "Android" : {
+        title: "Android RA",
+        description: [
+            "Esta aplicación fue el proyecto final para la asignatura de visión por computador.",
+            "Desarrollado en Java para Android era una app que enviaba la imagen de la cámara a otro servidor en Java que usaba OpenCV para analizar la imagen y detectar si el objeto, del color dicho al principio de la app, colisionaba con los objetos que caían. "
+        ],
+        photos: [
+            {label:"Video",first:true, type:"video", url:"https://www.dropbox.com/scl/fi/k04i3vfw3g3l1qmk7v1ud/final.mp4?rlkey=ot0em35bf5atfgir22p7fzc4i&st=y5qqhsco&raw=1"},
+        ],
+        links: [
+
+        ]
+    },
+    "GJ" : {
+        title: "Pengüin",
+        description: [
+            "Este videojuego fue creado para una Game Jam junto a varias personas acreditadas en la web.",
+            "Desarrollado en Unity en 3 días, es un videojuego donde tenemos que ayudar a un pingüino a escapar de un barco."
+        ],
+        photos: [
+            {label:"Primera pantalla",first:true, type:"img", url:"https://img.itch.zone/aW1hZ2UvMTE5MDk5LzUxNDcxMTQucG5n/original/8ZNKII.png"},
+            {label:"Segunda pantalla", type:"img", url:"https://img.itch.zone/aW1hZ2UvMTE5MDk5LzUxNDcxMjcucG5n/original/LHu8Yn.png"} 
+        ],
+        links: [
+            { label: "Descarga el juego en itch.io", url: "https://urkaz.itch.io/penguin" },
+        ]
+    },
+    "ME" : {
+        title: "Yo",
+        description: [
+            "Mi nombre es Adrián Carboneras Mas. Soy desarrollador de software con estudios de grado en Diseño y desarrollo de videojuegos y el Máster de Inteligencia Artificial, Reconocimiento de Formas e Imagen Digital en la UPV.",
+            "Trabajé 6 meses en la UPV en el proyecto AirT programando la interfaz para controlar un dron y 7 años en dypsela como desarrollador de Unity, full stack engineer y administrador de sistemas usando AWS.",
+            "Si deseas ponerte en contacto conmigo, mi correo es adriacs23@gmail.com."
+        ],
+        photos: [
+            {label:"",first:true, type:"img", url:"../img/20250402_173658.jpg"},
+        ],
+        links: [
+            { label: "LinkedIn", url: "https://www.linkedin.com/in/adrián-carboneras-mas-b1bb36109" },
+            { label: "GitHub", url: "https://github.com/drain111?tab=repositories" }
+        ]
+    },
+    "Buscaminas" : {
+        title: "Buscaminas",
+        description: [
+            "Juega al clásico Buscaminas directamente aquí dentro."
+        ],
+        photos: [
+            {label:"Buscaminas", first:true, type:"game", url:"https://minesweeper.one/"},
+        ],
+        links: [
+            { label: "Abrir en una pestaña nueva", url: "https://minesweeper.one/" },
+        ]
+    },
+    "Solitario" : {
+        title: "Solitario",
+        description: [
+            "Juega al clásico Solitario directamente aquí dentro."
+        ],
+        photos: [
+            {label:"Solitario", first:true, type:"game", url:"https://games.htmlgames.com/JSSolitaire/"},
+        ],
+        links: [
+            { label: "Abrir en una pestaña nueva", url: "https://games.htmlgames.com/JSSolitaire/" },
+        ]
+    },
+    "SpaceCadet" : {
+        title: "Space Cadet",
+        description: [
+            "Juega al clásico pinball Space Cadet directamente aquí dentro."
+        ],
+        photos: [
+            {label:"Space Cadet", first:true, type:"game", url:"https://98.js.org/programs/pinball/space-cadet.html"},
+        ],
+        links: [
+            { label: "Abrir en una pestaña nueva", url: "https://98.js.org/programs/pinball/space-cadet.html" },
+        ]
+    }
+    };
+    function CloseModal() {
+        document.getElementById("modalWindow").classList.add("d-none")
+        //remove the iframe in case the user decided to play pinball, it's noisy
+        const imgWrapper = document.getElementById("innerCarousel");
+        imgWrapper = "";
+
+    }
+    //shows/hides the start menu that appears when clicking the windows button
+    function ToggleStartMenu(e) {
+        e.stopPropagation();
+        document.getElementById("startMenu").classList.toggle("d-none");
+        //always reset the games submenu closed when the start menu is toggled
+        document.getElementById("gamesSubMenu").classList.add("d-none");
+    }
+    //shows/hides the games submenu inside the start menu
+    function ToggleGamesMenu(e) {
+        e.stopPropagation();
+        document.getElementById("gamesSubMenu").classList.toggle("d-none");
+    }
+    //closes the start menu (used when an option inside it is clicked)
+    function CloseStartMenu() {
+        document.getElementById("startMenu").classList.add("d-none");
+        document.getElementById("gamesSubMenu").classList.add("d-none");
+    }
+    //closes the start menu if the user clicks anywhere outside of it
+    document.addEventListener("click", function(e) {
+        const startMenu = document.getElementById("startMenu");
+        const wrapper = document.getElementById("windowsButtonWrapper");
+        if (!startMenu.classList.contains("d-none") && !wrapper.contains(e.target)) {
+            CloseStartMenu();
+        }
+    });
+    function OpenModal(e, modal) {
+        //we get the selected project and populate the html element with the text
+        const project = projects[modal];
+        document.getElementById("modalWindow").classList.remove("d-none")
+        document.getElementById("topModalTitleText").innerText = project.title;
+        
+
+        const textModal = document.querySelector("#textModal");
+        //creates an array of text for each element of the array, and then the join transform the array into a string
+        const paragraphs = project.description.map(p => `<p>${p}</p>`).join("");
+        const links = project.links.map(l => `<a target="_blank" class="linkButton" href="${l.url}">${l.label}</a>`).join("");
+        textModal.innerHTML = paragraphs + links;
+        //applying the pictures/videos
+        const imgWrapper = document.getElementById("innerCarousel");
+        const imgS = project.photos.map(l=> {
+            const active = l.first? " active":"";
+            if(l.type=="game") {
+                return '<div class="item gameIframeItem' + active + `">
+                        <iframe src="` + l.url+ '" alt="' + l.label + `" allowfullscreen></iframe>
+                    </div>
+                `
+            }
+            else if(l.type!="video") {
+                return '<div class="item' + active + `">
+                        <img src="` + l.url+ '" alt="' + l.label + `">
+                            <div class="carousel-caption">
+                                <p>`+ l.label + `</p>
+                        </div>
+                    </div>
+                `
+            }
+            else {
+                
+                return '<div class="item' + active + `" style="height:400px;">
+                        <iframe src="` + l.url+ '" alt="' + l.label + `" height:500px allowfullscreen></iframe>
+                    </div>
+                `
+            }
+        }).join("")
+        var circles = "";
+        for(let i=0; i<Object.keys(project.photos).length; i++) {
+            if(i==0) {
+                circles = '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>'
+            }
+            else {
+                circles = circles + '<li data-target="#myCarousel" data-slide-to="' + i + '"></li>'
+            }
+            
+        }
+        //adding the number of photo select to the same number as there are objects
+        //Also if there is only 1 image, do not show the arrows or circles
+        imgWrapper.innerHTML = imgS;
+        document.getElementById("circles").innerHTML = circles;
+        if(Object.keys(project.photos).length >1) {
+            document.getElementById("circles").classList.remove("d-none");
+            document.getElementById("next-carousel").classList.remove("d-none");
+            document.getElementById("prev-carousel").classList.remove("d-none");
+
+        }
+        else {
+            document.getElementById("circles").classList.add("d-none");
+            document.getElementById("next-carousel").classList.add("d-none");
+            document.getElementById("prev-carousel").classList.add("d-none");
+
+        }
+    }
+    //function to move the windows that contain the icons
+    function mousedown(e){
+        //adding the events to end the moving of the windows
+        window.addEventListener("pointermove", mousemove)
+        window.addEventListener("pointerup", mouseup)
+        //getting the parent of the bar and calculating where did the user click on the bar
+        //so that the window moves from where the user clicked
+        var xwindow = e.target.parentElement;
+        let prevX = e.clientX - parseInt(xwindow.style.left)
+        let prevY = e.clientY - parseInt(xwindow.style.top);
+        function mousemove(e){
+            //we remove from the currentclick the offset of the position, and we move the window constantly
+            let newX = e.clientX - prevX
+            let newY = e.clientY - prevY
+            xwindow.style.left = newX +  "px"
+            xwindow.style.top = newY + "px"
+            
+        }
+        function mouseup(){
+            //we remove the events and stop moving the tab
+            window.removeEventListener("pointermove", mousemove)
+            window.removeEventListener("pointerup", mouseup)
+        }
+    }
+    //every resize changes back the position to the original, I can't calculate where it would change just for a showcase of my portfolio
+    //but it could be calculated by a simple rule of three. And then we would have to calculate if the windows overlap, to not overlap them
+    window.addEventListener("resize", OrganizeFolders)
+    OrganizeFolders();
+    function OrganizeFolders() {
+        //getting the 3 folders and the size of the container that contains them
+        const folders = document.querySelectorAll(".folders");
+        const containerWidth = document.getElementById("apps").clientWidth;
+        const containerHeight = document.getElementById("apps").clientHeight;
+         //This is to have a margin from the top (1rem = 16px).
+         //I don't use margin to make screen moving easier
+        const GAP_REM_IN_PX = 8;
+        //we begin with a margin on the left on the css, but the margin on top is this one
+        let currentLeft = 0;
+        let currentTop = GAP_REM_IN_PX;
+        let currentColumnWidth = 0;
+
+        folders.forEach((folder) => {
+            // 1. Reset positioning so offsetWidth / offsetHeight measure correctly
+
+            const folderWidth = folder.offsetWidth;
+            const folderHeight = folder.offsetHeight;
+
+            // 2. Check vertical overflow: If placing this folder exceeds container height, wrap to next column
+            if (currentTop + folderHeight > containerHeight && currentTop > 0) {
+                currentLeft += currentColumnWidth + GAP_REM_IN_PX;
+                currentTop = GAP_REM_IN_PX;
+                currentColumnWidth = 0; // Reset max column width for the new column
+            }
+
+            // 3. Track the widest folder in the current column for horizontal spacing
+            currentColumnWidth = Math.max(currentColumnWidth, folderWidth);
+
+            // 4. Check horizontal overflow: Prevent folder from rendering off-screen
+            if (currentLeft + folderWidth > containerWidth) {
+                // Clamp to right edge if screen is too narrow
+                folder.style.left = `${Math.max(0, containerWidth - folderWidth)}px`;
+            } else {
+                folder.style.left = `${currentLeft}px`;
+            }
+
+            // 5. Apply calculated vertical position
+            folder.style.top = `${currentTop}px`;
+
+            // 6. Advance top tracker for the next item in this column
+            currentTop += folderHeight + GAP_REM_IN_PX;
+        });
+
+    }
+    class Weather {
+        //initialize the weather class here with the location of the user. We initialize an array with the wmo code and it's correspondent font awesome icon 
+        //the list of numbers is here https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
+        constructor(latitude, longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.iconArray = [{ code: 0, label: "Cloud development not observed or not observable", icon: "fa-sun" },
+                { code: 1, label: "Clouds generally dissolving or becoming less developed", icon: "fa-cloud-sun" },
+                { code: 2, label: "State of sky on the whole unchanged", icon: "fa-sun" },
+                { code: 3, label: "Clouds generally forming or developing", icon: "fa-cloud-sun" },
+                { code: 4, label: "Visibility reduced by smoke", icon: "fa-smog" },
+                { code: 5, label: "Haze", icon: "fa-smog" },
+                { code: 6, label: "Widespread dust in suspension in the air", icon: "fa-wind" },
+                { code: 7, label: "Dust or sand raised by wind", icon: "fa-wind" },
+                { code: 8, label: "Well developed dust whirls or sand whirls", icon: "fa-wind" },
+                { code: 9, label: "Duststorm or sandstorm within sight or at station", icon: "fa-wind" },
+                { code: 10, label: "Mist", icon: "fa-smog" },
+                { code: 11, label: "Patches of shallow fog or ice fog", icon: "fa-smog" },
+                { code: 12, label: "More or less continuous shallow fog or ice fog", icon: "fa-smog" },
+                { code: 13, label: "Lightning visible, no thunder heard", icon: "fa-bolt" },
+                { code: 14, label: "Precipitation within sight, not reaching the ground", icon: "fa-cloud-sun-rain" },
+                { code: 15, label: "Precipitation distant (> 5 km)", icon: "fa-cloud-sun-rain" },
+                { code: 16, label: "Precipitation near to, but not at station", icon: "fa-cloud-rain" },
+                { code: 17, label: "Thunderstorm, but no precipitation", icon: "fa-cloud-bolt" },
+                { code: 18, label: "Squalls at or within sight of station", icon: "fa-wind" },
+                { code: 19, label: "Funnel cloud(s) (tornado or waterspout)", icon: "fa-tornado" },
+                { code: 20, label: "Recent drizzle or snow grains", icon: "fa-cloud-rain" },
+                { code: 21, label: "Recent rain (not freezing)", icon: "fa-cloud-rain" },
+                { code: 22, label: "Recent snow", icon: "fa-snowflake" },
+                { code: 23, label: "Recent rain and snow or ice pellets", icon: "fa-cloud-meatball" },
+                { code: 24, label: "Recent freezing drizzle or freezing rain", icon: "fa-icicles" },
+                { code: 25, label: "Recent shower(s) of rain", icon: "fa-cloud-showers-heavy" },
+                { code: 26, label: "Recent shower(s) of snow / rain and snow", icon: "fa-snowflake" },
+                { code: 27, label: "Recent shower(s) of hail", icon: "fa-cloud-meatball" },
+                { code: 28, label: "Recent fog or ice fog", icon: "fa-smog" },
+                { code: 29, label: "Recent thunderstorm", icon: "fa-cloud-bolt" },
+                { code: 30, label: "Slight/moderate duststorm/sandstorm (decreased)", icon: "fa-wind" },
+                { code: 31, label: "Slight/moderate duststorm/sandstorm (no change)", icon: "fa-wind" },
+                { code: 32, label: "Slight/moderate duststorm/sandstorm (begun/increased)", icon: "fa-wind" },
+                { code: 33, label: "Severe duststorm/sandstorm (decreased)", icon: "fa-wind" },
+                { code: 34, label: "Severe duststorm/sandstorm (no change)", icon: "fa-wind" },
+                { code: 35, label: "Severe duststorm/sandstorm (begun/increased)", icon: "fa-wind" },
+                { code: 36, label: "Slight or moderate blowing snow (low)", icon: "fa-snowflake" },
+                { code: 37, label: "Heavy drifting snow", icon: "fa-snowflake" },
+                { code: 38, label: "Slight or moderate blowing snow (high)", icon: "fa-snowflake" },
+                { code: 39, label: "Heavy drifting snow", icon: "fa-snowflake" },
+                { code: 40, label: "Fog or ice fog at a distance", icon: "fa-smog" },
+                { code: 41, label: "Fog or ice fog in patches", icon: "fa-smog" },
+                { code: 42, label: "Fog or ice fog, sky visible (thinner)", icon: "fa-smog" },
+                { code: 43, label: "Fog or ice fog, sky invisible", icon: "fa-smog" },
+                { code: 44, label: "Fog or ice fog, sky visible (no change)", icon: "fa-smog" },
+                { code: 45, label: "Fog or ice fog, sky invisible", icon: "fa-smog" },
+                { code: 46, label: "Fog or ice fog, sky visible (thicker)", icon: "fa-smog" },
+                { code: 47, label: "Fog or ice fog, sky invisible", icon: "fa-smog" },
+                { code: 48, label: "Fog depositing rime, sky visible", icon: "fa-smog" },
+                { code: 49, label: "Fog depositing rime, sky invisible", icon: "fa-smog" },
+                { code: 50, label: "Drizzle, slight, intermittent", icon: "fa-cloud-rain" },
+                { code: 51, label: "Drizzle, slight, continuous", icon: "fa-cloud-rain" },
+                { code: 52, label: "Drizzle, moderate, intermittent", icon: "fa-cloud-rain" },
+                { code: 53, label: "Drizzle, moderate, continuous", icon: "fa-cloud-rain" },
+                { code: 54, label: "Drizzle, heavy, intermittent", icon: "fa-cloud-showers-heavy" },
+                { code: 55, label: "Drizzle, heavy, continuous", icon: "fa-cloud-showers-heavy" },
+                { code: 56, label: "Drizzle, freezing, slight", icon: "fa-icicles" },
+                { code: 57, label: "Drizzle, freezing, moderate or heavy", icon: "fa-icicles" },
+                { code: 58, label: "Drizzle and rain, slight", icon: "fa-cloud-rain" },
+                { code: 59, label: "Drizzle and rain, moderate or heavy", icon: "fa-cloud-showers-heavy" },
+                { code: 60, label: "Rain, slight, intermittent", icon: "fa-cloud-rain" },
+                { code: 61, label: "Rain, slight, continuous", icon: "fa-cloud-rain" },
+                { code: 62, label: "Rain, moderate, intermittent", icon: "fa-cloud-rain" },
+                { code: 63, label: "Rain, moderate, continuous", icon: "fa-cloud-rain" },
+                { code: 64, label: "Rain, heavy, intermittent", icon: "fa-cloud-showers-heavy" },
+                { code: 65, label: "Rain, heavy, continuous", icon: "fa-cloud-showers-heavy" },
+                { code: 66, label: "Rain, freezing, slight", icon: "fa-icicles" },
+                { code: 67, label: "Rain, freezing, moderate or heavy", icon: "fa-icicles" },
+                { code: 68, label: "Rain or drizzle and snow, slight", icon: "fa-cloud-meatball" },
+                { code: 69, label: "Rain or drizzle and snow, moderate or heavy", icon: "fa-cloud-meatball" },
+                { code: 70, label: "Intermittent snowflakes, slight", icon: "fa-snowflake" },
+                { code: 71, label: "Continuous snowflakes, slight", icon: "fa-snowflake" },
+                { code: 72, label: "Intermittent snowflakes, moderate", icon: "fa-snowflake" },
+                { code: 73, label: "Continuous snowflakes, moderate", icon: "fa-snowflake" },
+                { code: 74, label: "Intermittent snowflakes, heavy", icon: "fa-snowflake" },
+                { code: 75, label: "Continuous snowflakes, heavy", icon: "fa-snowflake" },
+                { code: 76, label: "Diamond dust", icon: "fa-snowflake" },
+                { code: 77, label: "Snow grains", icon: "fa-snowflake" },
+                { code: 78, label: "Isolated star-like snow crystals", icon: "fa-snowflake" },
+                { code: 79, label: "Ice pellets", icon: "fa-icicles" },
+                { code: 80, label: "Rain shower(s), slight", icon: "fa-cloud-sun-rain" },
+                { code: 81, label: "Rain shower(s), moderate or heavy", icon: "fa-cloud-showers-heavy" },
+                { code: 82, label: "Rain shower(s), violent", icon: "fa-cloud-showers-heavy" },
+                { code: 83, label: "Shower(s) of rain and snow mixed, slight", icon: "fa-cloud-meatball" },
+                { code: 84, label: "Shower(s) of rain and snow mixed, moderate or heavy", icon: "fa-cloud-meatball" },
+                { code: 85, label: "Snow shower(s), slight", icon: "fa-snowflake" },
+                { code: 86, label: "Snow shower(s), moderate or heavy", icon: "fa-snowflake" },
+                { code: 87, label: "Shower(s) of snow pellets / small hail, slight", icon: "fa-cloud-meatball" },
+                { code: 88, label: "Shower(s) of snow pellets / small hail, moderate or heavy", icon: "fa-cloud-meatball" },
+                { code: 89, label: "Shower(s) of hail, slight", icon: "fa-cloud-meatball" },
+                { code: 90, label: "Shower(s) of hail, moderate or heavy", icon: "fa-cloud-meatball" },
+                { code: 91, label: "Slight rain with recent thunderstorm", icon: "fa-cloud-bolt" },
+                { code: 92, label: "Moderate or heavy rain with recent thunderstorm", icon: "fa-cloud-bolt" },
+                { code: 93, label: "Slight snow / rain and snow / hail with recent thunderstorm", icon: "fa-cloud-bolt" },
+                { code: 94, label: "Moderate or heavy snow / hail with recent thunderstorm", icon: "fa-cloud-bolt" },
+                { code: 95, label: "Thunderstorm, slight or moderate, with rain/snow", icon: "fa-cloud-bolt" },
+                { code: 96, label: "Thunderstorm, slight or moderate, with hail", icon: "fa-cloud-bolt" },
+                { code: 97, label: "Thunderstorm, heavy, with rain/snow", icon: "fa-cloud-bolt" },
+                { code: 98, label: "Thunderstorm combined with duststorm/sandstorm", icon: "fa-cloud-bolt" },
+                { code: 99, label: "Thunderstorm, heavy, with hail", icon: "fa-cloud-bolt" }]
+        }
+        //We check the weather service api after we've obtained the location of the user.
+        async ConsultApi() {
+            try {
+                const respuesta = await fetch("https://api.open-meteo.com/v1/forecast?latitude=" + this.latitude + "&longitude=" + this.longitude + "&current=temperature_2m,weather_code&forecast_days=1");
+                if (!respuesta.ok) throw new Error('Error en la red');
+                const datos = await respuesta.json();
+                document.getElementById("degrees").innerText = datos.current.temperature_2m + "ºC";
+                document.getElementById("weatherIcon").innerHTML = "<i class='fa-solid " + this.iconArray[datos.current.weather_code].icon +"'></i>"
+            } catch (error) {
+                console.error('Hubo un problema:', error);
+            }
+        }
+    }
+    //Reuse the vaiable that keeps track of what time is it now
+    const now = new Date();
+    ChangeDate();
+    function ChangeDate() {
+        //modify interval each second, to go from 59 seconds to 00 and add 1 minutes, in case whoever enters, enters at 59
+        setInterval(function() {
+            //update the time to now, just in case someone is watching my portfolio 23:59 of 31 of december, to not put extreme examples, it's easier to let the pc handle it
+            now.setTime(Date.now());
+            //adds a 0 in front of the number if it is less than 10 hour or 10 minutes, same for days and months
+            document.getElementById("hour").innerText = String(now.getHours()).padStart(2, '0') + ":" + String(now.getMinutes()).padStart(2, '0') 
+            document.getElementById("date").innerText = String(now.getDate()).padStart(2, '0') + "/" + String(now.getMonth() + 1).padStart(2, '0') + "/" + now.getFullYear();
+
+        },1000)
+    }
+    //let's get the user position to know where we have to call the weather api
+    ChangeWeather()
+    function ChangeWeather() {
+        //let's check if the device has access to geolocation services
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                const weather = new Weather(latitude, longitude);
+                setInterval(weather.ConsultApi(), 180000);
+
+                },
+                (error) => {
+                // Handle errors (denied permission, timeout, unavailable, etc.)
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert("Para consultar el tiempo de tu localidad, necesito acceso a tu posición.")
+                    break;
+                    case error.POSITION_UNAVAILABLE:
+                    console.error("Location information is unavailable.");
+                    break;
+                    case error.TIMEOUT:
+                        alert("Para consultar el tiempo de tu localidad, necesito acceso a tu posición.")
+                    break;
+                    default:
+                        console.error("An unknown error occurred.");
+                }
+                },
+                {
+                enableHighAccuracy: false, // Uses GPS if available (more precise, takes more power)
+                timeout: 10000,          // Time to wait before timing out (in ms)
+                maximumAge: 0            // Don't use a cached position
+                }
+            );
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+
+    }
+    GetBattery();
+    function GetBattery() {
+        try {
+            navigator.getBattery().then((battery) => {
+                //battery.level, .charging, chargingTime, dischargingTime
+                ChangeBatteryLevels(battery);
+                //listening to the event to change the battery icon
+                battery.addEventListener("levelchange", () => {
+                    ChangeBatteryLevels(battery);
+                });
+            });
+        }
+        catch(err) {
+            //this function only works in chromium browsers, so firefox and all of those will jump here
+        }
+        
+    }
+    function ChangeBatteryLevels(battery) {
+        //to simplify we'll just draw 3 levels of battery
+        if(battery.level >= 0.75) {
+            document.getElementById("battery").innerHTML = "<i class='fa-solid fa-battery-full'></i>"
+
+        }
+        else if( battery.level <= 0.25) {
+            document.getElementById("battery").innerHTML = "<i class='fa-solid fa-battery-quarter'></i>"
+
+        }
+        else {
+            document.getElementById("battery").innerHTML = "<i class='fa-solid fa-battery-half'></i>"
+
+        }
+    }
+
+</script>
+</html>

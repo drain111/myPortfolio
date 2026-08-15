@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>My portfolio</title>
+</head>
+<style>
+    body {
+        background-image: url("./img/login-bg.png");
+        background-size:cover;
+        height:100vh;
+        margin:0;
+        padding:0;
+        backdrop-filter: blur(40px);
+        font-family: sans-serif;
+
+    }
+    img {
+        border-radius:100rem;
+        width:256px;
+    }
+    .mainContainer {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        height: 100%;
+        flex-direction:column;
+    }
+    .buttonsDiv {
+        margin-top:3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .languageButtons:hover {
+        cursor:pointer;
+        background: #0fa5ff36;
+
+    }
+    .languageButtons {
+        border-radius: 1rem;
+        background: transparent;
+        border: none;
+        padding:1rem;
+        text-decoration: none;
+        color:black;
+        text-align: center;
+    }
+    
+    .emoji {
+        margin:0;
+        font-size:8rem;
+    }
+</style>
+<body>
+    <div class="mainContainer">
+        <img src="./img/profile3.jpg">
+        <h1> Portfolio de Adrián Carboneras Mas</h4>
+        <div class="buttonsDiv">
+            <a href="./en" class="languageButtons">
+                <p class="emoji">🇬🇧 </p> 
+                <p>Continue to the portfolio in english</p> 
+            </a>
+            <a href="./es" class="languageButtons">
+                <p class="emoji">🇪🇸 </p> 
+                <p>Ir al portfolio en castellano</p>  
+            </a>
+        </div>
+    </div>
+</body>
+</html>

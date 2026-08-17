@@ -593,7 +593,7 @@
         title: "Clon Digital",
         description: [
             "Clon Digital is a SaaS platform I developed during my time at Dypsela. The platform let users upload 3D models that were automatically optimized to under 100k triangles and 1K textures, so they could be viewed on low-end devices and in virtual reality. The platform worked on mobile (Android and iOS), VR, and PCs",
-            "I developed the backend in Node.js on an AWS instance, with PostgreSQL on an RDS instance as the database. The 3D models could be used to create multiplayer rooms: each model automatically got a collider, and users could move around the room and talk to each other. You could also add PDFs, videos, and other models, control lighting and visibility, and room admins could restrict access or voice permissions for other users. The multiplayer ran on another AWS instance, also in Node.js, using websockets for real-time communication.", // second paragraph, if you ever split it
+            "I developed the backend in Node.js on an AWS instance, with PostgreSQL on an RDS instance as the database. The decimation algorithm was on a Docker image that was executed on an instance only when needed. The 3D models could be used to create multiplayer rooms: each model automatically got a collider, and users could move around the room and talk to each other. You could also add PDFs, videos, and other models, control lighting and visibility, and room admins could restrict access or voice permissions for other users. The multiplayer ran on another AWS instance, also in Node.js, using websockets for real-time communication.", // second paragraph, if you ever split it
             "The 3D models could also be viewed in augmented reality. In the example experience below, opening the left-hand menu shows the models, and clicking the QR icon opens a QR code that, when scanned, lets you view the AR experience on your phone.",
             "Links: the first one goes to the platform's main page, and the second to a sample room where you can try out the experience."
         ],
@@ -640,7 +640,7 @@
     },
     "Margon" : {
         icon:"../img/margon.png",
-        title:"Dr. Margon and the Journey of Water",
+        title:"Dr. Margon y el origen del agua",
         description: [
             "In this Dypsela project I worked on fixing audio desync on low-power devices, general optimizations, and making the app multilingual instead of having a separate app for each language.",
             "‘La Doctora Margon y el Viaje del Agua’ was an app built with Unity and Vuforia where children, using augmented reality on a phone or tablet along with a companion book, could see scenes explaining the journey of water.",
@@ -856,10 +856,10 @@
     },
     "ME" : {
         icon:"../img/profile3.jpg",
-        title: "Yo",
+        title: "About me",
         description: [
             "My name is Adrián Carboneras Mas. I'm a software developer with a degree in Video Game Design and Development and a Master's degree in Artificial Intelligence, Pattern Recognition and Digital Image Processing from UPV.",
-            "I worked for 6 months at UPV on the AirT project, programming the interface to control a drone, and 7 years at Dypsela as a Unity developer, full stack engineer, and systems administrator using AWS.",
+            "I worked for 6 months at UPV on the AirT project, programming the interface to control a drone, and 7 years at Dypsela as a Unity developer developing apps like Margon, full stack engineer on Clon Digital, and systems administrator using AWS to run Clon DIgital.",
             "If you'd like to get in touch, my email is adriacs23@gmail.com."
         ],
         photos: [

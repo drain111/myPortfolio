@@ -32,7 +32,7 @@
 
     }
     .mainContainer {
-        justify-content: end;
+        justify-content: start;
         align-items: center;
         display: flex;
         height: 100%;
@@ -106,7 +106,7 @@
     #apps {
         display:flex;
         width:100vw;
-        height:100%;
+        height: calc(100% - 60px);
         column-width: 160px;
         flex-direction:column;
         margin: 0;
@@ -210,8 +210,7 @@
         display: none!important;
     }
     #modalWindow {
-        color:white;
-        position: fixed;
+        height:100%;
         inset: 0;              /* top/right/bottom/left: 0 */
         z-index: 10;
         margin: 1rem;              /* remove the old margin: 1rem */
@@ -273,6 +272,8 @@
         padding: 1rem;
         gap: 1rem;
         border-radius:0 0 1rem 1rem;
+        overflow: auto;
+
     }
 
     .carousel {
@@ -282,6 +283,7 @@
         display: flex;
         justify-content: center;
           align-items: center;
+            height: fit-content;
     }
     
     .carousel-inner {
@@ -511,7 +513,7 @@
                         </ol>
 
                         <!-- Wrapper for slides -->
-                        <div id="innerCarousel" class="carousel-inner">
+                        <div id="innerCarousel" class="carousel-inner" onclick="ToggleDescription()">
                             <div class="item active">
                                 <img src="../img/clon1.png" alt="Clon Digital, página de usuario">
                             </div>
@@ -948,6 +950,12 @@
         ]
     }
     };
+    function ToggleDescription() {
+        const everyDescription = document.querySelectorAll(".carousel-caption");
+        everyDescription.forEach((desc)  =>{
+            desc.classList.toggle("d-none");
+        })
+    }
     function CloseModal() {
         document.getElementById("modalWindow").classList.add("d-none")
         //remove the iframe in case the user decided to play pinball, it's noisy

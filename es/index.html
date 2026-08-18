@@ -52,6 +52,20 @@
         height:100%;
         background:transparent;
         border:none;
+        padding: 0 1.25rem;
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+    #windowsButton:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
+    #windowsButton:active,
+    #windowsButton.active {
+        background: rgba(255, 255, 255, 0.16);
+    }
+    #windowsButton:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.6);
+        outline-offset: -4px;
     }
     svg {
         font-size: 22px;
@@ -482,7 +496,7 @@
                     </div>
                 </div> 
             </div>
-            <div id="modalWindow" class="d-none">
+            <div id="modalWindow" class="d-none" onclick="if(event.target===this){CloseModal()}">
                 <div id="titleModal"> 
                     <div class="exampleTitle" id="CD"><img id="tabImage" class="small" src="../img/penguin.png"><h4 id="topModalTitleText">Title</h4></div>
                     <i onclick="CloseModal()" class="fa-solid fa-xmark"></i>
@@ -541,7 +555,7 @@
                 <p id="degrees" class="textDegrees">20ºC</p>
             </div>
             <div id="windowsButtonWrapper">
-                <button id="windowsButton" onclick="ToggleStartMenu(event)"><i class="fa-brands fa-windows"></i></button>
+                <button id="windowsButton" onclick="ToggleStartMenu(event)" aria-haspopup="true" aria-expanded="false" aria-label="Menú de inicio"><i class="fa-brands fa-windows"></i></button>
                 <div id="startMenu" class="d-none">
                     <div class="startMenuItem" onclick="CloseStartMenu(event, 'ME');">
                         <i class="fa-solid fa-user"></i>
@@ -592,8 +606,8 @@
         icon:"../img/CD.jpg",
         title: "Clon Digital",
         description: [
-            "Clon Digital es un SaaS que desarrollé durante mi etapa en Dypsela. La plataforma permitía subir modelos 3D que se optimizaban automáticamente por debajo de 100k triángulos y texturas de 1K, para que pudieran visualizarse en dispositivos de gama baja y en realidad virtual. La plataforma funcionaba tanto en móvil (Android e iOS), VR y PCs",
-            "Desarrollé el backend en Node.js sobre una instancia de AWS, con PostgreSQL en una instancia RDS como base de datos. El algoritmo de decimación se encuentra en un contenedor de Docker que se ejecutaba en una instancia solo cuando se necesitaba. Los modelos 3D podían usarse para crear salas multijugador: cada modelo recibía automáticamente un colisionador, y los usuarios podían moverse por la sala y hablar entre ellos. También era posible añadir PDFs, vídeos y otros modelos, controlar la iluminación y la visibilidad, y los administradores de la sala podían restringir el acceso o los permisos de voz de otros usuarios. El multijugador corría sobre otra instancia de AWS también en node.js que usaba websockets para comunicaciones en tiempo real.", // second paragraph, if you ever split it
+            "Clon Digital es un SaaS que desarrollé durante mi etapa en dypsela. La plataforma permitía subir modelos 3D que se optimizaban automáticamente por debajo de 100k triángulos y texturas de 1K, para que pudieran visualizarse en dispositivos de gama baja y en realidad virtual. La plataforma funcionaba tanto en móvil (Android e iOS), VR y PCs",
+            "Desarrollé el backend en Node.js sobre una instancia de AWS, con PostgreSQL en una instancia RDS como base de datos. El algoritmo de decimación se encuentra en un contenedor de Docker que se ejecutaba en una instancia solo cuando se necesitaba. La landing se encontraba en otra instancia de AWS y funcionaba en WordPress, el cual mantenía unidos en la dirección clondigital.com a través de un proxy reverso nginx. Los modelos 3D podían usarse para crear salas multijugador: cada modelo recibía automáticamente un colisionador, y los usuarios podían moverse por la sala y hablar entre ellos. También era posible añadir PDFs, vídeos y otros modelos, controlar la iluminación y la visibilidad, y los administradores de la sala podían restringir el acceso o los permisos de voz de otros usuarios. El multijugador corría sobre otra instancia de AWS también en node.js que usaba websockets para comunicaciones en tiempo real.", // second paragraph, if you ever split it
             "Los modelos 3D también podían visualizarse en realidad aumentada. En la experiencia de ejemplo de abajo, abriendo el menú izquierdo se pueden ver los modelos y al hacer clic en el icono de QR, se abrirá un QR que al escanear te permitirá visualizar en el móvil la realidad aumentada.",
             "Enlaces: el primer enlace es a la página principal de la plataforma y el segundo sala de ejemplo para probar la experiencia."
         ],
@@ -625,7 +639,7 @@
         icon:"../img/banco.jpg",
         title:"Banco de España",
         description: [
-            "Este proyecto se desarrolló en 1 mes para el Banco de España.",
+            "Este proyecto se desarrolló en un mes para el Banco de España.",
             "Es un visor web donde el usuario puede realizar una visita guiada tanto en VR como en 2D del edificio del Banco de España. En la esquina superior izquierda hay un mapa donde el usuario se puede mover entre todas las vistas del banco, y en algunas habitaciones hay puntos de interés que el usuario puede abrir para ver objetos en 3D del banco hechos con IA con un QR para verlo en Realidad Aumentada.",
             "Este proyecto se realizó usando React.js."
         ],
@@ -815,7 +829,7 @@
         title: "WebGL",
         description: [
             "Esta Web fue desarrollada por mí para una asignatura de desarrollo de gráficos en 3D.",
-            "Desarrollado en JavaScript y en WebGL puro sin ningún motor, es el ejemplo que se puede ver previamente donde se muestra una escena inspirada en THe Legend Of Zelda."
+            "Desarrollado en JavaScript y en WebGL puro sin ningún motor, es el ejemplo que se puede ver previamente donde se muestra una escena inspirada en The Legend of Zelda."
         ],
         photos: [
             {label:"Imagen del modelo",first:true, type:"img", url:"https://static.tumblr.com/upjk3mf/nnQtjtk5v/majora_s.png"},
@@ -860,6 +874,7 @@
         title: "Yo",
         description: [
             "Mi nombre es Adrián Carboneras Mas. Soy desarrollador de software con estudios de grado en Diseño y desarrollo de videojuegos y el Máster de Inteligencia Artificial, Reconocimiento de Formas e Imagen Digital en la UPV.",
+            "Hablo castellano de forma nativa y tengo el título de C1 de inglés.",
             "Trabajé 6 meses en la UPV en el proyecto AirT programando la interfaz para controlar un dron y 7 años en dypsela como desarrollador de Unity haciendo varias aplicaciones como Margon explicadas en otros iconos, full stack engineer de la web Clon Digital y administrador de sistemas usando AWS donde funcionaba Clon Digital.",
             "Si deseas ponerte en contacto conmigo, mi correo es adriacs23@gmail.com."
         ],
@@ -943,9 +958,15 @@
     //shows/hides the start menu that appears when clicking the windows button
     function ToggleStartMenu(e) {
         e.stopPropagation();
-        document.getElementById("startMenu").classList.toggle("d-none");
+        const startMenu = document.getElementById("startMenu");
+        startMenu.classList.toggle("d-none");
         //always reset the games submenu closed when the start menu is toggled
         document.getElementById("gamesSubMenu").classList.add("d-none");
+        //keep the button visibly "pressed" while its menu is open
+        const isOpen = !startMenu.classList.contains("d-none");
+        const btn = document.getElementById("windowsButton");
+        btn.classList.toggle("active", isOpen);
+        btn.setAttribute("aria-expanded", isOpen);
     }
     //shows/hides the games submenu inside the start menu
     function ToggleGamesMenu(e) {
@@ -956,7 +977,12 @@
     function CloseStartMenu(event, toCall) {
         document.getElementById("startMenu").classList.add("d-none");
         document.getElementById("gamesSubMenu").classList.add("d-none");
-        OpenModal(event, toCall)
+        const btn = document.getElementById("windowsButton");
+        btn.classList.remove("active");
+        btn.setAttribute("aria-expanded", "false");
+        if(toCall) {
+            OpenModal(event, toCall)
+        }
     }
     //closes the start menu if the user clicks anywhere outside of it
     document.addEventListener("click", function(e) {

@@ -167,6 +167,9 @@ function ChangeWeather() {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
             const weather = new Weather(latitude, longitude);
+            //setInterval not running for the first time?
+            weather.ConsultApi();
+
             setInterval(() => {
                 weather.ConsultApi();
             }, 180000);
